@@ -4,7 +4,7 @@
 
 - Explain the role of ActiveRecord in a web app
 - Diagram the request-response lifecycle in a Sinatra app with ActiveRecord
-- Load Active Record in a Sinatra app
+- Load ActiveRecord in a Sinatra app
 - Build RESTful routes to implement CRUD functionality in Sinatra
 - Write ERB views to display ActiveRecord models
 - Write forms with attributes for ActiveRecord models
@@ -20,13 +20,13 @@ native web interface - only the command line.
 Put the two together, and we can build an app with a web interface that is
 backed by a database.
 
-> Demonstrate Tunr as an example of this.
+> Demonstrate [Tunr](https://wdi-dc-tunr.herokuapp.com/) as an example of this.
 
-## The Request-Response Cycle (15 minutes / 0:15)
+## The Request-Response Cycle
 
 How exactly can ActiveRecord and Sinatra work together? Their relationship is best described through the **request-response** cycle...
 
-1.  The user makes a request (e.g., clicking a link, typing in a URL). **Sinatra** receives the request.
+1.  The user makes a request (e.g. clicking a link, typing in a URL). **Sinatra** receives the request.
 2. **Sinatra** matches the request to the appropriate route that we've defined in our app.
 3. That route contains a block of code to run in response. We call this **controller** code. This code is written by us and determines how to handle that request. This code is unique to our app.
   - In Sinatra, our routes and controller code live in the same file. This will change with Rails.
@@ -44,7 +44,7 @@ As our apps get more complex, they begin to require lots of different dependenci
 
 Below is a summary of the important folders and files in our app. It's important to note that some of these are expected by sinatra (e.g., `views`) and the rest are just convention to match our upcoming transition to Rails.
 
-For this lesson, we'll be using [Tunr](http://github.com/ga-wdi-exercises/tunr_sinatra). Go ahead and clone it and change directories into the `tunr` folder.
+For this lesson, we'll be using [Tunr](https://github.com/ga-wdi-pvd/tunr_sinatra). Go ahead and clone it and change directories into the `tunr` folder.
 
 **`tunr`**
 - **`db`**
@@ -65,7 +65,7 @@ For this lesson, we'll be using [Tunr](http://github.com/ga-wdi-exercises/tunr_s
 - *console.rb*
   - Interact with models and data in the database via REPL.
 
-#### Explore the Code (5 minutes / 0:20)
+#### Explore the Code
 
 #### Questions
 
@@ -80,13 +80,13 @@ For this lesson, we'll be using [Tunr](http://github.com/ga-wdi-exercises/tunr_s
 
 We often start building an app by describing the data model. We do this by creating an ERD, defining our schema according to that ERD, loading it into a database, and then building our ActiveRecord classes. These ActiveRecord classes are what we refer to as **models**.
 
-### You Do: ERD (5 minutes / 0:25)
+### You Do: ERD
 
 > 3 minutes exercise. 2 minutes review.
 
 Spend 5 minutes diagramming the ERD for Tunr.
 
-### You Do: Define the Schema (5 minutes / 0:30)
+### You Do: Define the Schema
 
 Create the schema file in the db directory...
 
@@ -135,13 +135,13 @@ $ psql -d tunr_db < db/schema.sql
 
 </details>
 
-### You Do: Define ActiveRecord Models (5 minutes / 0:35)
+### You Do: Define ActiveRecord Models
 
 Create files for your `Artist` and `Song` classes in the `models` folder. Remember that the file names should be singular, to match the class name (e.g., `models/song.rb`)
 
 > Is there any old code that we can leverage?
 
-## We Do: Load Seed Data (5 minutes / 0:40)
+## We Do: Load Seed Data
 
 Take a look at `db/seeds.rb`. We've taken some data from the iTunes API, and formatted / saved it so we can load it into our database using AR.
 
@@ -162,7 +162,7 @@ $ ruby db/seeds.rb
 
 </details>
 
-## Setting up our Sinatra app (10 minutes / 0:50)
+## Setting up our Sinatra app
 
 > At this point in the lesson, you can either proceed with your code or checkout the `solution_step_1` branch to continue.
 
@@ -175,36 +175,36 @@ To begin, let's set up the main `app.rb` file, which will connect to the databas
 What do we need to `require` in `app.rb`?
 
 ```ruby
-require 'sinatra'
-require 'sinatra/reloader'
-require 'active_record'
+require "sinatra"
+require "sinatra/reloader"
+require "active_record"
 
 # Load the file to connect to the DB
-require_relative 'db/connection'
+require_relative "db/connection"
 
 # Load models
-require_relative 'models/artist'
-require_relative 'models/song'
+require_relative "models/artist"
+require_relative "models/song"
 ```
 
-## Break (10 minutes / 1:00)
+## Break
 
 ### Important Note
 
-From this point, I will be coding the I do portion of the new material in a `wdi_app` the same domain used in the active record class. You will continue to code on Tunr. If at any point your code contains the words `wdi`, `instructor`, or `student` in any variant, you are doing something incorrectly.
+From this point, I will be coding the I do portion of the new material in a `wdi_app`. You will continue to code on Tunr. If at any point your code contains the words `wdi`, `instructor`, or `student` in any variant, you are doing something incorrectly.
 
 Reference the code in the I Do's to complete the objectives for Tunr. The `wdi_app` codebase has all of the same working parts as the one you're currently working with.
 
 Step by step, you're going to add the 7 RESTful routes for artists along with their corresponding views. We're also going to use ActiveRecord to make sure that the data is being persisted.
 
-### I Do: Index - WDI App (15 minutes / 1:15)
+## I Do: Index - WDI App
 
 Now that we have the basic structure in place, let's start to put everything together. One of the most common features in the web today is the `index`. This is a feature that lists out collections. In your case you might want a feature to list out all of the artists for your app. That's what the index does.
 
 In `app.rb`...
 
 ```ruby
-get '/instructors' do
+get "/instructors" do
   @instructors = Instructor.all
   erb :"instructors/index"
 end
@@ -229,18 +229,18 @@ In `views/instructors/index.erb`...
 <% end %>
 ```
 
-If we run the application - `$ ruby app.rb` - and visit `http://localhost:4567/instructors`, we can see all the instructors' first names.
+If we run the application  (`$ ruby app.rb`) and visit `http://localhost:4567/instructors`, we can see all the instructors' first names.
 
-### You Do: Index - Tunr (15 minutes / 1:30)
+## You Do: Index - Tunr
 
 > 10 minutes exercise. 5 minutes review.
 
-### I Do: Show - WDI App (10 minutes / 1:40)
+## I Do: Show - WDI App
 
 Another common feature in web apps is to have a page dedicated to a single item stored in the database. We often refer to this functionality as "show."
 
 ```ruby
-get '/instructors/:id' do
+get "/instructors/:id" do
   @instructor = Instructor.find(params[:id])
   erb :"instructors/show"
 end
@@ -273,7 +273,7 @@ in `views/instructors/index.erb`...
 <% end %>
 ```
 
-## You Do: Show - Tunr (10 minutes / 1:50)
+## You Do: Show - Tunr
 
 > 5 minutes exercise. 5 minutes review.
 
@@ -299,9 +299,9 @@ With `GET` requests, a user types a URL into the browser or clicks on a link. A 
 
 > There are other ways to initiate `POST` request, like [Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=en).
 
-## I Do: Create - WDI App (Rest of Class)
+## I Do: Create - WDI App
 
-Another main feature of web applications is the ability to create new instances of our models (i.e., add rows to a database).
+Another main feature of web applications is the ability to create new instances of our models (i.e. add rows to a database).
 
 In order to do that we need to provide an interface for the user. That interface is HTML forms.
 
@@ -314,12 +314,12 @@ This is a simple app that keeps track of first names. Let's checkout the relevan
 In `app.rb`...
 
 ```ruby
-get '/' do
+get "/" do
   @first_names = first_names
   erb :index
 end
 
-post '/add_name' do
+post "/add_name" do
   first_names << params[:first_name]
   redirect "/"
 end
@@ -334,7 +334,7 @@ And in `views/index.erb`...
 <% end %>
 <h2>Enter New Name Here and Hit Enter</h2>
 <form action="add_name" method="post">
-  <input name='first_name'>
+  <input name="first_name">
 </form>
 ```
 
@@ -344,7 +344,7 @@ When I enter a new name it gets added to the list! Let's take a closer look at t
 
 ```html
 <form action="add_name" method="post">
-  <input name='first_name'>
+  <input name="first_name">
 </form>
 ```
 
@@ -363,7 +363,7 @@ Keeping these things in mind, let's see what a post request to create objects lo
 In `app.rb`...
 
 ```ruby
-post '/instructors' do
+post "/instructors" do
   @instructor = Instructor.create(first_name: params[:first_name], last_name: params[:last_name], age: params[:age])
   redirect "/instructors/#{@instructor.id}"
 end
@@ -378,7 +378,7 @@ So we've defined the post request, but how do we make that request to our server
 You've seen this sort of thing before in `app.rb`...
 
 ```ruby
-get '/instructors/new' do
+get "/instructors/new" do
   erb :"instructors/new"
 end
 ```
@@ -424,7 +424,7 @@ There's actually a better way to do this. We can "namespace" our parameter in fo
 With this structure, we need to update our `post` request to use this nested structure in `app.rb`...
 
 ```ruby
-post '/instructors' do
+post "/instructors" do
   @instructor = Instructor.create(params[:instructor])
   redirect "/instructors/#{@instructor.id}"
 end
@@ -437,28 +437,31 @@ Here are some important parts about this code...
 - The path for this request is `/instructors`
 - The method for this request is `post`
 
-Thats it! Now we have the ability to create new instructors.
+Now we have the ability to create new instructors!
+
+How can we display this option to the user?
+> Refer to the Show step for help
 
 ## You Do: Create & New - Tunr
 
-### Editing Models (Lab Reference)
+## I Do: Update & Edit - WDI App
 
-Another common feature in web applications is the ability to modify data in a database. In order for the user to manipulate data, you(the developer), need to create an interface for them to do that. We need 2 routes for this feature, one that displays the interface to edit, and one that actually updates the database.
+Another common feature in web applications is the ability to modify data in a database. In order for the user to manipulate data, you (the developer), need to create an interface for them to do that. We need 2 routes for this feature, one that displays the interface to edit, and one that actually updates the database.
 
 ####  `edit/update` Routes
 
 In `app.rb`...
 
-```
+```ruby
 get "/instructors/:id/edit" do
   @instructor = Instructor.find(params[:id])
-  erb(:"instructors/edit")
+  erb :"instructors/edit"
 end
 
-put '/instructors/:id' do
+put "/instructors/:id" do
   @instructor = Instructor.find(params[:id])
   @instructor.update(params[:instructor])
-  redirect("/instructors/#{@instructor.id}")
+  redirect "/instructors/#{@instructor.id}"
 end
 ```
 
@@ -466,7 +469,7 @@ Both of these routes first find an instructor based on parameters from the path.
 
 A big problem with `put` and `delete` requests is that they aren't native to HTML forms.
 
-To make a `put` request, we need to 'fake it' in our form with a hidden input for the `_method` param:
+To make a `put` request, we need to "fake it" in our form with a hidden input for the `_method` param:
 
 ```html
 <form action="/instructors/<%= @instructor.id %>" method="post">
@@ -497,17 +500,17 @@ Let's provide a link to the edit page in the `show` feature of our application. 
 
 ## You Do: Update & Edit - Tunr
 
-### Deleting Models (Lab Reference)
+## I Do: Delete - WDI App
 
 Ever delete a tweet? That's a feature! In web apps, you want to be able to allow users to delete things - or things you think it's ok for them to delete - from your database.
 
 Heres the request we'll need in `app.rb`...
 
 ```ruby
-delete '/instructors/:id' do
+delete "/instructors/:id" do
   @instructor = Instructor.find(params[:id])
   @instructor.destroy
-  redirect("/instructors")
+  redirect "/instructors"
 end
 ```
 
@@ -525,13 +528,13 @@ Where does this view go? Basically wherever you want the ability to delete an in
 
 ## You Do: Delete - Tunr
 
-## Closing / Questions
+## Review Questions
 
--------
-
-## Sample Quiz Questions
-
-<!-- AM: Add 'em! -->
+- Explain the role of ActiveRecord in a web app.
+- Why use ActiveRecord and Sinatra together?
+- How do we load ActiveRecord in a Sinatra app?
+- What are the RESTful routes we use to implement CRUD functionality in Sinatra?
+- What is ERB and why do we use it?
 
 ## Appendix: RESTful Paths and CRUD Actions
 
