@@ -233,8 +233,6 @@ If we run the application  (`$ ruby app.rb`) and visit `http://localhost:4567/in
 
 ## You Do: Index - Tunr
 
-> 10 minutes exercise. 5 minutes review.
-
 ## I Do: Show - WDI App
 
 Another common feature in web apps is to have a page dedicated to a single item stored in the database. We often refer to this functionality as "show."
@@ -274,8 +272,6 @@ in `views/instructors/index.erb`...
 ```
 
 ## You Do: Show - Tunr
-
-> 5 minutes exercise. 5 minutes review.
 
 ## REST
 
